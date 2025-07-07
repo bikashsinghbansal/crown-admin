@@ -9,6 +9,11 @@ export * from "./categories/AddCategory";
 export * from "./categories/CategoryList";
 export * from "./categories/EditCategory";
 
+// Popups
+export * from "./popups/AddPopup";
+export * from "./popups/PopupList";
+export * from "./popups/EditPopup";
+
 // Catalogue Categories
 export * from "./catalogueCategory/AddCatalogueCategory";
 export * from "./catalogueCategory/EditCatalogueCategory";

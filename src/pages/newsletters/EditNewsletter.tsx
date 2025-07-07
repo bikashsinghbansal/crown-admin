@@ -9,7 +9,7 @@ import {
   newsletterSchema,
   NewsletterValues,
   newsletterInitialValues,
-} from "../../validationSchemas/updateNewsletterSchema";
+} from "../../validationSchemas/newsletterSchema";
 import { useEffect, useState } from "react";
 import { get, put } from "../../utills";
 import { toast } from "react-toastify";
@@ -159,6 +159,45 @@ export function EditNewsletter() {
                       </p>
                     ) : null}
                   </div>
+                </div>
+
+                <div className="form-group col-md-6">
+                  <label htmlFor="">Newsletter Type</label>
+                  <div className="d-flex gap-3">
+                    <div className="d-flex align-items-center gap-2">
+                      <input
+                        type="radio"
+                        name="newsletterType"
+                        id="general"
+                        value={"GENERAL"}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        checked={values.newsletterType == "GENERAL"}
+                      />
+                      <label htmlFor="general" className="mt-2">
+                        General
+                      </label>
+                    </div>
+                    <div className="d-flex align-items-center gap-1">
+                      <input
+                        type="radio"
+                        name="newsletterType"
+                        id="popup"
+                        value={"POPUP"}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        checked={values.newsletterType == "POPUP"}
+                      />
+                      <label htmlFor="popup" className="mt-2">
+                        Popup
+                      </label>
+                    </div>
+                  </div>
+                  {errors.newsletterType && touched.newsletterType ? (
+                    <p className="custom-form-error text-danger">
+                      {errors.newsletterType}
+                    </p>
+                  ) : null}
                 </div>
 
                 <SubmitButton loading={updading} text="Update Email" />

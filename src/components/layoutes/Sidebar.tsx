@@ -39,16 +39,21 @@ export function Sidebar() {
                   Carousel
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/popups">
+                  Popup
+                </Link>
+              </li>
             </ul>
           </div>
         </li>
 
-        <li className="nav-item">
+        {/* <li className="nav-item">
           <Link className="nav-link" to="/media">
             <i className="ti-image menu-icon"></i>
             <span className="menu-title">Media</span>
           </Link>
-        </li>
+        </li> */}
 
         {/* Categories */}
         <li className="nav-item">

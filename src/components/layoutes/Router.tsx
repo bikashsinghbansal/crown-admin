@@ -47,6 +47,11 @@ export function Router() {
       <Route path="/categories/edit/:id" element={<Pages.EditCategory />} />
       <Route path="/categories" element={<Pages.CategoryList />} />
 
+      {/* Popup */}
+      <Route path="/popups/add" element={<Pages.AddPopup />} />
+      <Route path="/popups/edit/:id" element={<Pages.EditPopup />} />
+      <Route path="/popups" element={<Pages.PopupList />} />
+
       {/* Carousel */}
       <Route path="/carousels/add" element={<Pages.AddCarousel />} />
       <Route path="/carousels/edit/:id" element={<Pages.EditCarousel />} />
