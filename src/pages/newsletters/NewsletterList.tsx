@@ -66,7 +66,7 @@ export function NewsletterList() {
   type Record = {
     email: string;
     createdAt: string;
-    newsletterType: string;
+    source: string;
     subscriptionStatus: SubscriptionStatus;
     id: string;
   };
@@ -98,9 +98,10 @@ export function NewsletterList() {
         Header: "EMAIL",
         accessor: "email",
       },
+
       {
-        Header: "NEWSLETTER TYPE",
-        accessor: "newsletterType",
+        Header: "SOURCE",
+        accessor: "source",
       },
 
       {
@@ -169,7 +170,7 @@ export function NewsletterList() {
       return {
         email: data.email,
         createdAt: data.createdAt,
-        newsletterType: data.newsletterType,
+        source: data.source,
         subscriptionStatus: data.subscriptionStatus,
         id: data._id,
       };

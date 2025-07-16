@@ -10,9 +10,10 @@ export const orderSchema = Yup.object({
   city: Yup.string().label("City"),
   state: Yup.string().label("State"),
   country: Yup.string().label("Country"),
-  pincode: Yup.string().length(6).label("Pincode"),
+  pincode: Yup.string().label("Pincode"),
 
   orderStatus: Yup.object().label("ORDER_PLACED"),
+  updateNote: Yup.string().label("Update Note"),
 });
 
 export const orderInitialValues: OrderValues = {
@@ -28,6 +29,7 @@ export const orderInitialValues: OrderValues = {
   pincode: "",
 
   orderStatus: null,
+  updateNote: "",
 };
 
 export interface OrderValues {
@@ -45,4 +47,5 @@ export interface OrderValues {
     label: string;
     value: string;
   } | null;
+  updateNote: string;
 }

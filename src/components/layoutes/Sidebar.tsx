@@ -48,12 +48,12 @@ export function Sidebar() {
           </div>
         </li>
 
-        {/* <li className="nav-item">
+        <li className="nav-item">
           <Link className="nav-link" to="/media">
             <i className="ti-image menu-icon"></i>
             <span className="menu-title">Media</span>
           </Link>
-        </li> */}
+        </li>
 
         {/* Categories */}
         <li className="nav-item">
@@ -193,7 +193,23 @@ export function Sidebar() {
               </li>
               <li className="nav-item">
                 <Link className="nav-link" to="/inquiries">
-                  Inquiry List
+                  All Inquiry
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link"
+                  to="/inquiries?type=certificateAndCatalogue"
+                >
+                  Certificate & Catelogue
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link"
+                  to="/inquiries?type=generalAndProduct"
+                >
+                  General & Products
                 </Link>
               </li>
             </ul>

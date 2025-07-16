@@ -12,16 +12,19 @@ import {
 } from "react-table";
 import React, { useEffect, useState } from "react";
 import moment from "moment";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { deleteConfirmation, get, remove } from "../../utills";
 import { toast } from "react-toastify";
 
 export function InquiryList() {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const type = searchParams.get("type");
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [status, setStatus] = useState<boolean | string>("");
-  const [inquiryType, setInquiryType] = useState<boolean | string>("");
+  const [inquiryTypes, setInquiryTypes] = useState<string[]>([]);
   const [needReload, setNeedReload] = useState<boolean>(false);
   const [records, setRecords] = useState<any[]>([]);
   const [pagination, setPagination] = useState({
@@ -31,6 +34,16 @@ export function InquiryList() {
     totalPages: 0,
   });
 
+  useEffect(() => {
+    if (type == "certificateAndCatalogue") {
+      setInquiryTypes(["CATALOGUE", "CERTIFICATE"]);
+    } else if (type == "generalAndProduct") {
+      setInquiryTypes(["GENERAL", "PRODUCT"]);
+    } else {
+      setInquiryTypes([]);
+    }
+  }, [type]);
+
   // Get Data From Database
   useEffect(
     function () {
@@ -39,7 +52,9 @@ export function InquiryList() {
         let url = `/inquiries?page=${pagination.page}&limit=${pagination.limit}`;
         if (searchQuery) url += `&searchQuery=${searchQuery}`;
         if (status) url += `&inquiryStatus=${status}`;
-        if (inquiryType) url += `&inquiryType=${inquiryType}`;
+        for (let inqType of inquiryTypes) {
+          url += `&inquiryTypes=${inqType}`;
+        }
 
         const apiResponse = await get(url, true);
 
@@ -66,17 +81,17 @@ export function InquiryList() {
       searchQuery,
       needReload,
       status,
-      inquiryType,
+      inquiryTypes,
     ]
   );
 
   type InquiryStatus = "PENDING" | "RESOLVED";
 
   type Record = {
-    name: string;
-    mobile: string;
+    nameNmobile: any;
     email: string;
     inquiryType: "ALL" | "PRODUCT" | "CAREER" | "GENERAL";
+    source: "ALL" | "PRODUCT" | "CAREER" | "GENERAL";
     createdAt: string;
     inquiryStatus: InquiryStatus;
     id: string;
@@ -106,13 +121,8 @@ export function InquiryList() {
       },
 
       {
-        Header: "NAME",
-        accessor: "name",
-      },
-
-      {
-        Header: "MOBILE",
-        accessor: "mobile",
+        Header: "USER",
+        accessor: "nameNmobile",
       },
 
       {
@@ -123,6 +133,11 @@ export function InquiryList() {
       {
         Header: "INQUIRY TYPE",
         accessor: "inquiryType",
+      },
+
+      {
+        Header: "SOURCE",
+        accessor: "source",
       },
 
       {
@@ -198,10 +213,15 @@ export function InquiryList() {
   const data = React.useMemo(() => {
     return records.map((data) => {
       return {
-        name: data.name,
-        mobile: `${data.mobile}`,
+        nameNmobile: (
+          <>
+            <p className="p-0 m-0">{data.name}</p>
+            <p className="p-0 m-0">{data.mobile}</p>
+          </>
+        ),
         email: data.email,
         inquiryType: data.inquiryType,
+        source: data.source,
         createdAt: data.createdAt,
         inquiryStatus: data.inquiryStatus,
         id: data._id,
@@ -253,9 +273,18 @@ export function InquiryList() {
     setStatus(evt.target.value);
   }
 
-  // handleSetInquiryType
-  function handleSetInquiryType(evt: React.ChangeEvent<HTMLInputElement>) {
-    setInquiryType(evt.target.value);
+  // handleSetInquiryTypes
+  function handleSetInquiryTypes(evt: React.ChangeEvent<HTMLInputElement>) {
+    // setInquiryTypes(evt.target.value);
+
+    let value = evt.target.value;
+
+    if (inquiryTypes.includes(value)) {
+      let filtered = inquiryTypes.filter((item) => item != value);
+      setInquiryTypes(filtered);
+    } else {
+      setInquiryTypes([...inquiryTypes, value]);
+    }
   }
 
   return (
@@ -328,43 +357,148 @@ export function InquiryList() {
                     >
                       <li className="d-flex px-3 gap-2">
                         <input
-                          type="radio"
+                          type="checkbox"
                           id="inquiryTypeAll"
                           value={"ALL"}
                           name="inquiryType"
-                          onChange={handleSetInquiryType}
+                          onChange={(evt) => {
+                            if (evt.target.checked) {
+                              setInquiryTypes([
+                                "GENERAL",
+                                "PRODUCT",
+                                "CAREER",
+                                "COMPLAINS",
+                                "EXPORT",
+                                "PRICE",
+                                "SAMPLING",
+                                "SUPPLIER",
+                                "CATALOGUE",
+                                "CERTIFICATE",
+                              ]);
+                            } else {
+                              setInquiryTypes([]);
+                            }
+                          }}
                         />
                         <label htmlFor="inquiryTypeAll">All</label>
                       </li>
                       <li className="d-flex px-3 gap-2">
                         <input
-                          type="radio"
+                          type="checkbox"
+                          id="inquiryTypeGeneral"
+                          value={"GENERAL"}
+                          name="inquiryType"
+                          checked={inquiryTypes.includes("GENERAL")}
+                          onChange={handleSetInquiryTypes}
+                        />
+                        <label htmlFor="inquiryTypeGeneral">General</label>
+                      </li>
+                      <li className="d-flex px-3 gap-2">
+                        <input
+                          type="checkbox"
                           id="inquiryTypeProduct"
                           value={"PRODUCT"}
                           name="inquiryType"
-                          onChange={handleSetInquiryType}
+                          checked={inquiryTypes.includes("PRODUCT")}
+                          onChange={handleSetInquiryTypes}
                         />
                         <label htmlFor="inquiryTypeProduct">Product</label>
                       </li>
                       <li className="d-flex px-3 gap-2">
                         <input
-                          type="radio"
+                          type="checkbox"
                           id="inquiryTypeCareer"
                           value={"CAREER"}
                           name="inquiryType"
-                          onChange={handleSetInquiryType}
+                          checked={inquiryTypes.includes("CAREER")}
+                          onChange={handleSetInquiryTypes}
                         />
                         <label htmlFor="inquiryTypeCareer">Career</label>
                       </li>
+
                       <li className="d-flex px-3 gap-2">
                         <input
-                          type="radio"
-                          id="inquiryTypeGeneral"
-                          value={"GENERAL"}
+                          type="checkbox"
+                          id="inquiryTypeComplains"
+                          value={"COMPLAINS"}
                           name="inquiryType"
-                          onChange={handleSetInquiryType}
+                          checked={inquiryTypes.includes("COMPLAINS")}
+                          onChange={handleSetInquiryTypes}
                         />
-                        <label htmlFor="inquiryTypeGeneral">General</label>
+                        <label htmlFor="inquiryTypeComplains">Complain</label>
+                      </li>
+
+                      <li className="d-flex px-3 gap-2">
+                        <input
+                          type="checkbox"
+                          id="inquiryTypeExport"
+                          value={"EXPORT"}
+                          name="inquiryType"
+                          checked={inquiryTypes.includes("EXPORT")}
+                          onChange={handleSetInquiryTypes}
+                        />
+                        <label htmlFor="inquiryTypeExport">Export</label>
+                      </li>
+
+                      <li className="d-flex px-3 gap-2">
+                        <input
+                          type="checkbox"
+                          id="inquiryTypePrice"
+                          value={"PRICE"}
+                          name="inquiryType"
+                          checked={inquiryTypes.includes("PRICE")}
+                          onChange={handleSetInquiryTypes}
+                        />
+                        <label htmlFor="inquiryTypePrice">Price</label>
+                      </li>
+                      <li className="d-flex px-3 gap-2">
+                        <input
+                          type="checkbox"
+                          id="inquiryTypeSampling"
+                          value={"SAMPLING"}
+                          name="inquiryType"
+                          checked={inquiryTypes.includes("SAMPLING")}
+                          onChange={handleSetInquiryTypes}
+                        />
+                        <label htmlFor="inquiryTypeSampling">Sampling</label>
+                      </li>
+
+                      <li className="d-flex px-3 gap-2">
+                        <input
+                          type="checkbox"
+                          id="inquiryTypeSupplier"
+                          value={"SUPPLIER"}
+                          name="inquiryType"
+                          checked={inquiryTypes.includes("SUPPLIER")}
+                          onChange={handleSetInquiryTypes}
+                        />
+                        <label htmlFor="inquiryTypeSupplier">Supplier</label>
+                      </li>
+
+                      <li className="d-flex px-3 gap-2">
+                        <input
+                          type="checkbox"
+                          id="inquiryTypeCatalogue"
+                          value={"CATALOGUE"}
+                          name="inquiryType"
+                          checked={inquiryTypes.includes("CATALOGUE")}
+                          onChange={handleSetInquiryTypes}
+                        />
+                        <label htmlFor="inquiryTypeCatalogue">Catalogue</label>
+                      </li>
+
+                      <li className="d-flex px-3 gap-2">
+                        <input
+                          type="checkbox"
+                          id="inquiryTypeCertificate"
+                          value={"CERTIFICATE"}
+                          name="inquiryType"
+                          checked={inquiryTypes.includes("CERTIFICATE")}
+                          onChange={handleSetInquiryTypes}
+                        />
+                        <label htmlFor="inquiryTypeCertificate">
+                          Certificate
+                        </label>
                       </li>
                     </ul>
                   </div>

@@ -124,40 +124,54 @@ export function AddNewsletter() {
                   </div>
 
                   <div className="form-group col-md-6">
-                    <label htmlFor="">Newsletter Type</label>
+                    <label htmlFor="">Newsletter Source</label>
                     <div className="d-flex gap-3">
                       <div className="d-flex align-items-center gap-2">
                         <input
                           type="radio"
-                          name="newsletterType"
-                          id="general"
-                          value={"GENERAL"}
+                          name="source"
+                          id="admin"
+                          value={"ADMIN"}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          checked={values.newsletterType == "GENERAL"}
+                          checked={values.source == "ADMIN"}
                         />
-                        <label htmlFor="general" className="mt-2">
-                          General
+                        <label htmlFor="admin" className="mt-2">
+                          Admin
                         </label>
                       </div>
                       <div className="d-flex align-items-center gap-1">
                         <input
                           type="radio"
-                          name="newsletterType"
+                          name="source"
+                          id="homepage"
+                          value={"HOMEPAGE"}
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          checked={values.source == "HOMEPAGE"}
+                        />
+                        <label htmlFor="homepage" className="mt-2">
+                          Homepage
+                        </label>
+                      </div>
+                      <div className="d-flex align-items-center gap-1">
+                        <input
+                          type="radio"
+                          name="source"
                           id="popup"
                           value={"POPUP"}
                           onChange={handleChange}
                           onBlur={handleBlur}
-                          checked={values.newsletterType == "POPUP"}
+                          checked={values.source == "POPUP"}
                         />
                         <label htmlFor="popup" className="mt-2">
                           Popup
                         </label>
                       </div>
                     </div>
-                    {errors.newsletterType && touched.newsletterType ? (
+                    {errors.source && touched.source ? (
                       <p className="custom-form-error text-danger">
-                        {errors.newsletterType}
+                        {errors.source}
                       </p>
                     ) : null}
                   </div>

@@ -115,6 +115,10 @@ export function EditOrder() {
       label: "CANCELLED",
       value: "CANCELLED",
     },
+    {
+      label: "RESOLVED",
+      value: "RESOLVED",
+    },
   ];
 
   return (
@@ -325,6 +329,22 @@ export function EditOrder() {
                         handleBlur={() => {
                           setFieldTouched("orderStatus", true);
                         }}
+                      />
+                    </div>
+
+                    {/* Update Note */}
+                    <div className="form-group col-md-6">
+                      <InputBox
+                        label="Update Note"
+                        name="updateNote"
+                        handleBlur={handleBlur}
+                        handleChange={handleChange}
+                        type="text"
+                        placeholder="Enter updateNote"
+                        value={values.updateNote}
+                        required={false}
+                        touched={touched.updateNote}
+                        error={errors.updateNote}
                       />
                     </div>
                   </div>

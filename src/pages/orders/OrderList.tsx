@@ -34,8 +34,8 @@ export function OrderList() {
 
   const [isCalendarVisible, setCalendarVisible] = useState(false);
   const [selectionRange, setSelectionRange] = useState({
-    startDate: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
-    endDate: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0),
+    startDate: new Date(new Date().setMonth(new Date().getMonth() - 5)),
+    endDate: new Date(), // today
     key: "selection",
   });
 
@@ -158,6 +158,11 @@ export function OrderList() {
                 <span className="d-flex gap-1">
                   <span className="rounded fa fa-check-circle text-times text-danger"></span>
                   <span className="text-danger">CANCELLED</span>
+                </span>
+              ) : value == "RESOLVED" ? (
+                <span className="d-flex gap-1">
+                  <span className="rounded fa fa-check text-times text-success"></span>
+                  <span className="text-success">RESOLVED</span>
                 </span>
               ) : (
                 ""
@@ -484,6 +489,17 @@ export function OrderList() {
                             onChange={handleSetOrderStatus}
                           />
                           <label htmlFor="cancelled">CANCELLED</label>
+                        </li>
+
+                        <li className="d-flex px-3 gap-2">
+                          <input
+                            type="radio"
+                            id="resolved"
+                            value={"RESOLVED"}
+                            name="orderStatus"
+                            onChange={handleSetOrderStatus}
+                          />
+                          <label htmlFor="resolved">RESOLVED</label>
                         </li>
                       </ul>
                     </div>
