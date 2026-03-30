@@ -42,7 +42,7 @@ export function EditSubCategory() {
   } = useFormik({
     onSubmit: async function (
       values: CategoryValues,
-      helpers: FormikHelpers<CategoryValues>
+      helpers: FormikHelpers<CategoryValues>,
     ) {
       setUpdating(true);
 
@@ -106,7 +106,7 @@ export function EditSubCategory() {
 
       if (id) getData(id);
     },
-    [id]
+    [id],
   );
 
   // get category
@@ -129,7 +129,7 @@ export function EditSubCategory() {
   // handleUploadFile
   async function handleUploadFile(
     event: React.ChangeEvent<HTMLInputElement>,
-    source?: "MAIN_IMAGE" | "LISTING_IMAGE"
+    source?: "MAIN_IMAGE" | "LISTING_IMAGE",
   ) {
     const mimeTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
 
@@ -205,7 +205,7 @@ export function EditSubCategory() {
   async function handleDeleteFile(
     event: React.MouseEvent<HTMLButtonElement>,
     fileName: string,
-    source?: "MAIN_IMAGE" | "LISTING_IMAGE"
+    source?: "MAIN_IMAGE" | "LISTING_IMAGE",
   ) {
     event.preventDefault();
 
@@ -232,14 +232,14 @@ export function EditSubCategory() {
 
       if (source == "MAIN_IMAGE") {
         const fileInput = document.getElementById(
-          `imageFile`
+          `imageFile`,
         ) as HTMLInputElement;
         if (fileInput) {
           fileInput.value = ""; // Clear the input field
         }
       } else {
         const fileInput = document.getElementById(
-          `listingImageFile`
+          `listingImageFile`,
         ) as HTMLInputElement;
         if (fileInput) {
           fileInput.value = ""; // Clear the input field
@@ -320,8 +320,10 @@ export function EditSubCategory() {
                     </div>
                     <div className="form-group col-md-8">
                       <label htmlFor={"imageFile"}>
-                        Category Image
-                        {/* <span className="text-danger"> *</span> */}
+                        Category Image{" "}
+                        <span className="text-danger text-small">
+                          (Size - 890X708 PX)
+                        </span>
                       </label>
                       <div className="d-flex gap-2">
                         <input
@@ -582,7 +584,7 @@ export function EditSubCategory() {
                         Listing Description
                       </label>
                       <CKEditor
-                        editor={ClassicEditor}
+                        editor={ClassicEditor as any}
                         data={values.listingDescription}
                         onChange={(event, editor) => {
                           const data = editor.getData();
@@ -603,7 +605,12 @@ export function EditSubCategory() {
                     </div>
 
                     <div className="form-group col-md-8">
-                      <label htmlFor={"listingImageFile"}>Listing Image</label>
+                      <label htmlFor={"listingImageFile"}>
+                        Listing Image{" "}
+                        <span className="text-danger text-small">
+                          (Size - 1476X638 PX)
+                        </span>
+                      </label>
                       <div className="d-flex gap-2">
                         <input
                           type="file"
@@ -632,7 +639,7 @@ export function EditSubCategory() {
                               handleDeleteFile(
                                 evt,
                                 values.listingImage,
-                                "LISTING_IMAGE"
+                                "LISTING_IMAGE",
                               );
                             }}
                           >

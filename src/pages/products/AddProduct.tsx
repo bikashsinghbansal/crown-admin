@@ -79,7 +79,7 @@ export function AddProduct() {
   } = useFormik({
     onSubmit: async function (
       values: ProductValues,
-      helpers: FormikHelpers<ProductValues>
+      helpers: FormikHelpers<ProductValues>,
     ) {
       setLoading(true);
 
@@ -159,7 +159,7 @@ export function AddProduct() {
       }
       getData();
     },
-    [values.categories]
+    [values.categories],
   );
 
   // get Types
@@ -206,7 +206,7 @@ export function AddProduct() {
       }
       getData();
     },
-    [values.categories]
+    [values.categories],
   );
 
   // handleUploadFile
@@ -276,7 +276,7 @@ export function AddProduct() {
 
   // handleUploadA4Image
   async function handleUploadA4Image(
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) {
     const mimeTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
 
@@ -328,7 +328,7 @@ export function AddProduct() {
   // handleDeleteA4Image
   async function handleDeleteA4Image(
     event: React.MouseEvent<HTMLButtonElement>,
-    fileName: string
+    fileName: string,
   ) {
     event.preventDefault();
 
@@ -344,7 +344,7 @@ export function AddProduct() {
       }
 
       const fileInput = document.getElementById(
-        `a4ImageFile`
+        `a4ImageFile`,
       ) as HTMLInputElement;
       if (fileInput) {
         fileInput.value = ""; // Clear the input field
@@ -356,7 +356,7 @@ export function AddProduct() {
 
   // handleUploadFullSheetImage
   async function handleUploadFullSheetImage(
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) {
     const mimeTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
 
@@ -408,7 +408,7 @@ export function AddProduct() {
   // handleDeleteFullSheetImage
   async function handleDeleteFullSheetImage(
     event: React.MouseEvent<HTMLButtonElement>,
-    fileName: string
+    fileName: string,
   ) {
     event.preventDefault();
 
@@ -424,7 +424,7 @@ export function AddProduct() {
       }
 
       const fileInput = document.getElementById(
-        `fullSheetImageFile`
+        `fullSheetImageFile`,
       ) as HTMLInputElement;
       if (fileInput) {
         fileInput.value = ""; // Clear the input field
@@ -436,7 +436,7 @@ export function AddProduct() {
 
   // handleUploadHighResolutionImage
   async function handleUploadHighResolutionImage(
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) {
     const mimeTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
 
@@ -488,7 +488,7 @@ export function AddProduct() {
   // handleDeleteHighResolutionImage
   async function handleDeleteHighResolutionImage(
     event: React.MouseEvent<HTMLButtonElement>,
-    fileName: string
+    fileName: string,
   ) {
     event.preventDefault();
 
@@ -504,7 +504,7 @@ export function AddProduct() {
       }
 
       const fileInput = document.getElementById(
-        `highResolutionImageFile`
+        `highResolutionImageFile`,
       ) as HTMLInputElement;
       if (fileInput) {
         fileInput.value = ""; // Clear the input field
@@ -725,7 +725,7 @@ export function AddProduct() {
                       handleChange={(evt) => {
                         setFieldValue(
                           "decorNumber",
-                          validateNumber(evt.target.value)
+                          validateNumber(evt.target.value),
                         );
                       }}
                       type="text"
@@ -746,7 +746,7 @@ export function AddProduct() {
                       handleChange={(evt) => {
                         setFieldValue(
                           "ralNumber",
-                          validateNumber(evt.target.value)
+                          validateNumber(evt.target.value),
                         );
                       }}
                       type="text"
@@ -851,7 +851,7 @@ export function AddProduct() {
                       Long Descriptions
                     </label>
                     <CKEditor
-                      editor={ClassicEditor}
+                      editor={ClassicEditor as any}
                       data=""
                       onChange={(event, editor) => {
                         const data = editor.getData();
@@ -875,7 +875,7 @@ export function AddProduct() {
                       Short Description
                     </label>
                     <CKEditor
-                      editor={ClassicEditor}
+                      editor={ClassicEditor as any}
                       data=""
                       onChange={(event, editor) => {
                         const data = editor.getData();
@@ -907,8 +907,10 @@ export function AddProduct() {
                   {/* A4 Image */}
                   <div className="form-group col-md-8">
                     <label htmlFor={"a4ImageFile"}>
-                      A4 Image (1372X1868){" "}
-                      <span className="text-danger"> *</span>
+                      A4 Image <span className="text-danger"> *</span>{" "}
+                      <span className="text-danger text-small">
+                        (Size - 1372X1868 PX)
+                      </span>
                     </label>
                     <div className="d-flex gap-2">
                       <input
@@ -937,7 +939,7 @@ export function AddProduct() {
                           onClick={(evt) => {
                             handleDeleteA4Image(
                               evt,
-                              getFileNameFromUrl(values.a4Image)
+                              getFileNameFromUrl(values.a4Image),
                             );
                           }}
                         >
@@ -955,8 +957,10 @@ export function AddProduct() {
                   {/*  Full Sheet Image */}
                   <div className="form-group col-md-8">
                     <label htmlFor={"fullSheetImageFile"}>
-                      Full Sheet Image (1372X1868){" "}
-                      <span className="text-danger"> *</span>
+                      Full Sheet Image<span className="text-danger"> *</span>{" "}
+                      <span className="text-danger text-small">
+                        (Size - 1372X1868 PX)
+                      </span>
                     </label>
                     <div className="d-flex gap-2">
                       <input
@@ -985,7 +989,7 @@ export function AddProduct() {
                           onClick={(evt) => {
                             handleDeleteFullSheetImage(
                               evt,
-                              values.fullSheetImage
+                              values.fullSheetImage,
                             );
                           }}
                         >
@@ -1003,8 +1007,11 @@ export function AddProduct() {
                   {/* High Resolution Image */}
                   <div className="form-group col-md-8">
                     <label htmlFor={"highResolutionImageFile"}>
-                      High Resolution Image{" "}
-                      <span className="text-danger"> *</span>
+                      High Resolution Image
+                      <span className="text-danger"> *</span>{" "}
+                      <span className="text-danger text-small">
+                        (Size - 2200X4400 PX)
+                      </span>
                     </label>
                     <div className="d-flex gap-2">
                       <input
@@ -1036,7 +1043,7 @@ export function AddProduct() {
                           onClick={(evt) => {
                             handleDeleteHighResolutionImage(
                               evt,
-                              values.highResolutionImage
+                              values.highResolutionImage,
                             );
                           }}
                         >

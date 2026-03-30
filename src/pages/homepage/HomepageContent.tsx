@@ -36,7 +36,7 @@ export function HomepageContent() {
   } = useFormik({
     onSubmit: async function (
       values: HomepageValues,
-      helpers: FormikHelpers<HomepageValues>
+      helpers: FormikHelpers<HomepageValues>,
     ) {
       setLoading(true);
 
@@ -77,7 +77,7 @@ export function HomepageContent() {
 
   // handleUploadAboutusImage
   async function handleUploadAboutusImage(
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) {
     const mimeTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
 
@@ -129,7 +129,7 @@ export function HomepageContent() {
   // handleDeleteAboutusImage
   async function handleDeleteAboutusImage(
     event: React.MouseEvent<HTMLButtonElement>,
-    fileName: string
+    fileName: string,
   ) {
     event.preventDefault();
 
@@ -145,7 +145,7 @@ export function HomepageContent() {
       }
 
       const fileInput = document.getElementById(
-        `imageFile`
+        `imageFile`,
       ) as HTMLInputElement;
       if (fileInput) {
         fileInput.value = ""; // Clear the input field
@@ -157,7 +157,7 @@ export function HomepageContent() {
 
   // handleUploadMarketingImage
   async function handleUploadMarketingImage(
-    event: React.ChangeEvent<HTMLInputElement>
+    event: React.ChangeEvent<HTMLInputElement>,
   ) {
     const mimeTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
 
@@ -209,7 +209,7 @@ export function HomepageContent() {
   // handleDeleteMarketingImage
   async function handleDeleteMarketingImage(
     event: React.MouseEvent<HTMLButtonElement>,
-    fileName: string
+    fileName: string,
   ) {
     event.preventDefault();
 
@@ -225,7 +225,7 @@ export function HomepageContent() {
       }
 
       const fileInput = document.getElementById(
-        `marketingImageFile`
+        `marketingImageFile`,
       ) as HTMLInputElement;
       if (fileInput) {
         fileInput.value = ""; // Clear the input field
@@ -335,7 +335,7 @@ export function HomepageContent() {
                             onClick={(evt) => {
                               handleDeleteAboutusImage(
                                 evt,
-                                values.aboutusImage
+                                values.aboutusImage,
                               );
                             }}
                           >
@@ -449,7 +449,10 @@ export function HomepageContent() {
 
                     <div className="form-group col-md-8">
                       <label htmlFor={"marketingImageFile"}>
-                        Marketing Image
+                        Marketing Image{" "}
+                        <span className="text-danger text-small">
+                          (Size - 500X500 PX)
+                        </span>
                         {/* <span className="text-danger"> *</span> */}
                       </label>
                       <div className="d-flex gap-2">
@@ -479,7 +482,7 @@ export function HomepageContent() {
                             onClick={(evt) => {
                               handleDeleteMarketingImage(
                                 evt,
-                                values.marketingImage
+                                values.marketingImage,
                               );
                             }}
                           >

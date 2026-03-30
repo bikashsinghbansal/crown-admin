@@ -30,7 +30,7 @@ export function AddCarousel() {
   } = useFormik({
     onSubmit: async function (
       values: CarouselValues,
-      helpers: FormikHelpers<CarouselValues>
+      helpers: FormikHelpers<CarouselValues>,
     ) {
       setCreating(true);
 
@@ -101,7 +101,7 @@ export function AddCarousel() {
   // handleDeleteFile
   async function handleDeleteFile(
     event: React.MouseEvent<HTMLButtonElement>,
-    fileName: string
+    fileName: string,
   ) {
     event.preventDefault();
 
@@ -117,7 +117,7 @@ export function AddCarousel() {
       }
 
       const fileInput = document.getElementById(
-        `imageFile`
+        `imageFile`,
       ) as HTMLInputElement;
       if (fileInput) {
         fileInput.value = ""; // Clear the input field
@@ -230,7 +230,7 @@ export function AddCarousel() {
                             onClick={(evt) => {
                               handleDeleteFile(
                                 evt,
-                                getFileNameFromUrl(values.image)
+                                getFileNameFromUrl(values.image),
                               );
                             }}
                           >

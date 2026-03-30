@@ -40,7 +40,7 @@ export function EditCatalogue() {
   } = useFormik({
     onSubmit: async function (
       values: CatalogueValues,
-      helpers: FormikHelpers<CatalogueValues>
+      helpers: FormikHelpers<CatalogueValues>,
     ) {
       setUpdating(true);
 
@@ -89,7 +89,7 @@ export function EditCatalogue() {
       }
       if (id) getData(id);
     },
-    [id]
+    [id],
   );
 
   // handleUploadFile
@@ -142,7 +142,7 @@ export function EditCatalogue() {
   // handleDeleteFile
   async function handleDeleteFile(
     event: React.MouseEvent<HTMLButtonElement>,
-    fileName: string
+    fileName: string,
   ) {
     event.preventDefault();
 
@@ -158,7 +158,7 @@ export function EditCatalogue() {
       }
 
       const fileInput = document.getElementById(
-        `catalogueFile`
+        `catalogueFile`,
       ) as HTMLInputElement;
       if (fileInput) {
         fileInput.value = ""; // Clear the input field
@@ -173,7 +173,7 @@ export function EditCatalogue() {
     async function getData() {
       const apiResponse = await get(
         "/catalogueCategories?status=true&limit=0",
-        true
+        true,
       );
       if (apiResponse?.status == 200) {
         const modifiedValue = apiResponse?.body?.map((value: any) => {
@@ -260,7 +260,10 @@ export function EditCatalogue() {
 
                     <div className="form-group col-md-6">
                       <label htmlFor={"catalogueFile"}>
-                        Category File <span className="text-danger"> *</span>
+                        Catalogue File <span className="text-danger"> *</span>{" "}
+                        <span className="text-danger text-small">
+                          Select PDF file only
+                        </span>
                       </label>
                       <div className="d-flex gap-2">
                         <input

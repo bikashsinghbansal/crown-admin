@@ -38,7 +38,7 @@ export function EditCertificate() {
   } = useFormik({
     onSubmit: async function (
       values: CertificateValues,
-      helpers: FormikHelpers<CertificateValues>
+      helpers: FormikHelpers<CertificateValues>,
     ) {
       setUpdating(true);
 
@@ -79,7 +79,7 @@ export function EditCertificate() {
       }
       if (id) getData(id);
     },
-    [id]
+    [id],
   );
 
   // handleUploadFile
@@ -132,7 +132,7 @@ export function EditCertificate() {
   // handleDeleteFile
   async function handleDeleteFile(
     event: React.MouseEvent<HTMLButtonElement>,
-    fileName: string
+    fileName: string,
   ) {
     event.preventDefault();
 
@@ -148,7 +148,7 @@ export function EditCertificate() {
       }
 
       const fileInput = document.getElementById(
-        `catalogueFile`
+        `catalogueFile`,
       ) as HTMLInputElement;
       if (fileInput) {
         fileInput.value = ""; // Clear the input field
@@ -210,7 +210,10 @@ export function EditCertificate() {
 
                     <div className="form-group col-md-6">
                       <label htmlFor={"catalogueFile"}>
-                        Certificate File <span className="text-danger"> *</span>
+                        Certificate File <span className="text-danger"> *</span>{" "}
+                        <span className="text-danger text-small">
+                          Select PDF file only
+                        </span>
                       </label>
                       <div className="d-flex gap-2">
                         <input

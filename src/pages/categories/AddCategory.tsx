@@ -42,7 +42,7 @@ export function AddCategory() {
   } = useFormik({
     onSubmit: async function (
       values: CategoryValues,
-      helpers: FormikHelpers<CategoryValues>
+      helpers: FormikHelpers<CategoryValues>,
     ) {
       setCreating(true);
 
@@ -76,7 +76,7 @@ export function AddCategory() {
   // handleUploadFile
   async function handleUploadFile(
     event: React.ChangeEvent<HTMLInputElement>,
-    source?: "MAIN_IMAGE" | "LISTING_IMAGE"
+    source?: "MAIN_IMAGE" | "LISTING_IMAGE",
   ) {
     const mimeTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
 
@@ -152,7 +152,7 @@ export function AddCategory() {
   async function handleDeleteFile(
     event: React.MouseEvent<HTMLButtonElement>,
     fileName: string,
-    source?: "MAIN_IMAGE" | "LISTING_IMAGE"
+    source?: "MAIN_IMAGE" | "LISTING_IMAGE",
   ) {
     event.preventDefault();
 
@@ -179,14 +179,14 @@ export function AddCategory() {
 
       if (source == "MAIN_IMAGE") {
         const fileInput = document.getElementById(
-          `imageFile`
+          `imageFile`,
         ) as HTMLInputElement;
         if (fileInput) {
           fileInput.value = ""; // Clear the input field
         }
       } else {
         const fileInput = document.getElementById(
-          `listingImageFile`
+          `listingImageFile`,
         ) as HTMLInputElement;
         if (fileInput) {
           fileInput.value = ""; // Clear the input field
@@ -258,7 +258,10 @@ export function AddCategory() {
 
                     <div className="form-group col-md-6">
                       <label htmlFor={"imageFile"}>
-                        Category Image <span className="text-danger"> *</span>
+                        Category Image <span className="text-danger"> *</span>{" "}
+                        <span className="text-danger text-small">
+                          (Size - 890X708 PX)
+                        </span>
                       </label>
                       <div className="d-flex gap-2">
                         <input
@@ -432,9 +435,12 @@ export function AddCategory() {
 
                     <div className="form-group col-md-8">
                       <label htmlFor={"listingImageFile"}>
-                        Listing Image
-                        {/* <span className="text-danger"> *</span> */}
+                        Listing Image{" "}
+                        <span className="text-danger text-small">
+                          (Size - 1476X638 PX)
+                        </span>
                       </label>
+
                       <div className="d-flex gap-2">
                         <input
                           type="file"
@@ -463,7 +469,7 @@ export function AddCategory() {
                               handleDeleteFile(
                                 evt,
                                 values.listingImage,
-                                "LISTING_IMAGE"
+                                "LISTING_IMAGE",
                               );
                             }}
                           >

@@ -46,7 +46,7 @@ export function EditPopup() {
   } = useFormik({
     onSubmit: async function (
       values: PopupValues,
-      helpers: FormikHelpers<PopupValues>
+      helpers: FormikHelpers<PopupValues>,
     ) {
       setUpdating(true);
 
@@ -89,13 +89,13 @@ export function EditPopup() {
 
       if (id) getData(id);
     },
-    [id]
+    [id],
   );
 
   // handleUploadFile
   async function handleUploadFile(
     event: React.ChangeEvent<HTMLInputElement>,
-    source?: "MAIN_IMAGE" | "LISTING_IMAGE"
+    source?: "MAIN_IMAGE" | "LISTING_IMAGE",
   ) {
     const mimeTypes = ["image/png", "image/jpg", "image/jpeg", "image/webp"];
 
@@ -171,7 +171,7 @@ export function EditPopup() {
   async function handleDeleteFile(
     event: React.MouseEvent<HTMLButtonElement>,
     fileName: string,
-    source?: "MAIN_IMAGE" | "LISTING_IMAGE"
+    source?: "MAIN_IMAGE" | "LISTING_IMAGE",
   ) {
     event.preventDefault();
 
@@ -198,14 +198,14 @@ export function EditPopup() {
 
       if (source == "MAIN_IMAGE") {
         const fileInput = document.getElementById(
-          `imageFile`
+          `imageFile`,
         ) as HTMLInputElement;
         if (fileInput) {
           fileInput.value = ""; // Clear the input field
         }
       } else {
         const fileInput = document.getElementById(
-          `listingImageFile`
+          `listingImageFile`,
         ) as HTMLInputElement;
         if (fileInput) {
           fileInput.value = ""; // Clear the input field
@@ -265,7 +265,7 @@ export function EditPopup() {
                         Descriptions
                       </label>
                       <CKEditor
-                        editor={ClassicEditor}
+                        editor={ClassicEditor as any}
                         data={values.descriptions}
                         onChange={(event, editor) => {
                           const data = editor.getData();
@@ -285,8 +285,10 @@ export function EditPopup() {
                     </div>
                     <div className="form-group col-md-8">
                       <label htmlFor={"imageFile"}>
-                        Image
-                        {/* <span className="text-danger"> *</span> */}
+                        Image{" "}
+                        <span className="text-danger text-small">
+                          (Size - 750X1200 PX)
+                        </span>
                       </label>
                       <div className="d-flex gap-2">
                         <input
